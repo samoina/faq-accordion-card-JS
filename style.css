@@ -81,6 +81,10 @@ h2 {
 	width: 1px;
 }
 
+.main__desktop {
+	display: none;
+}
+
 .main__heading {
 	text-align: center;
 	font-weight: 700;
@@ -98,6 +102,7 @@ h2 {
 
 .main__image--bg {
 	align-self: center;
+	margin: 0 auto;
 }
 
 .main__faq {
@@ -126,4 +131,39 @@ h2 {
 
 hr {
 	color: var(--light-grayish-blue);
+}
+
+/* Desktop Design */
+@media screen and (min-width: 960px) {
+	body {
+		background: linear-gradient(var(--soft-red), var(--soft-blue));
+	}
+
+	.main {
+		flex-direction: row;
+		justify-content: space-between;
+		min-width: 720px;
+	}
+
+	.main__desktop {
+		display: block;
+	}
+
+	.main__image--desktop,
+	.main__image--desktopbg {
+		position: absolute;
+		height: 18rem;
+	}
+
+	.main__image--desktop {
+		right: 50%;
+	}
+
+	.main__mobile {
+		display: none;
+	}
+
+	.main__faq {
+		padding-right: 2rem;
+	}
 }
