@@ -46,6 +46,8 @@ Users should be able to:
 
 ### What I learned
 
+#### Centering an absolute positioned element
+
 This challenge reminded me how to center an absolute position element using CSS, with the knowledge that absolute positioned elements are typically removed from the normal flow of the document. So I added a relative position to the parent container, in this case, the `main` element. I then moved it up from the top border of the parent using the property top, and adjusted the left and right to 0 before adding auto to the left and right margin setting. Here's the CSS code snippet.
 
 ```css
@@ -59,6 +61,42 @@ This challenge reminded me how to center an absolute position element using CSS,
 }
 ```
 
+#### Using event delegation to flip the arrow and show the answer to the question.
+
+With the way I have structured my code, my initial approach was to loop through the NodeList containing the immeadiate parent, and add an event listener to each at the point of iteration. I would then check if the targetted element has a class that contains the icon, and if so, loop through the Nodelist containing all the icons before toggling the class. This, however, did not work as expected as the click changed ALL of the icons. I then realized i shouldn't loop through the icons.
+
+```js
+let faqQues = document.querySelectorAll('.faq__ques'),
+	faqIcons = document.querySelectorAll('.faq__icon');
+
+faqQues.forEach((faq) => {
+	faq.addEventListener('click', (ev) => {
+		if (ev.target.classList.contains('faq__icon')) {
+			faqIcons.forEach((faqIcon) => {
+				faqIcon.classList.toggle('faq__icon--flip');
+			});
+		}
+	});
+});
+```
+
+So i adjusted my code and aded a single event listener to the main parent of all the divs (main). When a click event occurs, I use the .closest() method to traverse the element and its parents towards the document root until it finds a node that matches the specified selector. In my case (.faq--ques), and then used the query selector to get the specific icon in that specific element. I then toggle the class for functionality.
+
+```js
+let faqQues = document.querySelectorAll('.faq__ques'),
+	mainFAQ = document.querySelector('.main__faq');
+
+mainFAQ.addEventListener('click', (event) => {
+	const faqIcon = event.target
+		.closest('.faq__ques')
+		.querySelector('.faq__icon');
+
+	if (faqIcon) {
+		faqIcon.classList.toggle('faq__icon--flip');
+	}
+});
+```
+
 ### Continued development
 
 I am keen to repeat this project using ReactJS.
@@ -66,7 +104,7 @@ I am keen to repeat this project using ReactJS.
 ### Useful resources
 
 - [Center an absolute element with CSS ](https://www.freecodecamp.org/news/how-to-center-an-absolute-positioned-element/) - This helped me to understand positioning and centering of absolute elements
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
+- [CSS Tricks - Flip an Image](https://css-tricks.com/snippets/css/flip-an-image/)
 
 ## Author
 

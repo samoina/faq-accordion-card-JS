@@ -118,15 +118,38 @@ h2 {
 	font-weight: 700;
 }
 
+.faq__ques > p {
+	padding-right: 2rem;
+}
+
+.faq__ques:hover {
+	cursor: pointer;
+}
+
+.faq__ques > p:hover {
+	color: var(--soft-red);
+}
+
 .faq__icon {
 	height: 10px;
-	padding-left: 2rem;
+	/* padding-left: 2rem; */
+}
+
+.faq__icon--flip {
+	transform: rotate(180deg);
 }
 
 .faq__answer {
-	display: none;
 	padding-bottom: 1rem;
 	color: var(--dark-grayish-blue);
+}
+
+.faq__answer--hide {
+	display: none;
+}
+
+.faq__answer--show {
+	display: block;
 }
 
 hr {
