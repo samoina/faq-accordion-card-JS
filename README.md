@@ -27,7 +27,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![](./images/faq-accordion-mobile.png)
 
 ### Links
 
@@ -93,6 +93,46 @@ mainFAQ.addEventListener('click', (event) => {
 
 	if (faqIcon) {
 		faqIcon.classList.toggle('faq__icon--flip');
+	}
+});
+```
+
+#### Hiding previously active answers shown
+
+The approach above proved to be a challenge of sorts because the page would span downwwards when the arrow is clicked in the multiple sections. I needed to modify my code so that I'd get rid of the active classes if any of them were selected. So I created a Nodelist of the icons and answers, and if in each iteration the specific icon/ answer was not equal to the one clicked, I would then hide that and flip the icon back upwards. Here's the JS code for my approach.
+
+```js
+let mainFAQ = document.querySelector('.main__faq');
+
+mainFAQ.addEventListener('click', (event) => {
+	const clickedIcon = event.target.closest('.faq__ques');
+	const faqIcons = document.querySelectorAll('.faq__icon');
+	const faqAnswers = document.querySelectorAll('.faq__answer');
+
+	if (clickedIcon) {
+		//this is for toggling the icon class for the clicked question
+		const clickedIconElement = clickedIcon.querySelector('.faq__icon');
+		clickedIconElement.classList.toggle('faq__icon--flip');
+
+		//toggle the answer for visibility for the clicked question by getting the parent element two levels up
+		const clickedAnswer =
+			clickedIconElement.parentElement.parentElement.querySelector(
+				'.faq__answer'
+			);
+		clickedAnswer.classList.toggle('faq__answer--show');
+
+		// Remove the active status from the other answers and icons
+		faqAnswers.forEach((answer) => {
+			if (answer !== clickedAnswer) {
+				answer.classList.remove('faq__answer--show');
+			}
+		});
+
+		faqIcons.forEach((icon) => {
+			if (icon !== clickedIconElement) {
+				icon.classList.remove('faq__icon--flip');
+			}
+		});
 	}
 });
 ```
